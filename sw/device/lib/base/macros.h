@@ -647,6 +647,14 @@ struct OtSignConversionUnsupportedType {
   char err;
 };
 
+#ifdef __APPLE__
+#define _UINTPTR_INPTR_CAST(_v_) uintptr_t: (intptr_t)(_v_),
+#define _INTPTR_UINPTR_CAST(_v_) intptr_t: (uintptr_t)(_v_),
+#else
+#define _UINTPTR_INPTR_CAST(_v_)
+#define _INTPTR_UINPTR_CAST(_v_)
+#endif
+
 /**
  * This macro converts a given unsigned integer value to its signed counterpart.
  */
@@ -656,6 +664,7 @@ struct OtSignConversionUnsupportedType {
       uint16_t: (int16_t)(value), \
       uint32_t: (int32_t)(value), \
       uint64_t: (int64_t)(value), \
+      _UINTPTR_INPTR_CAST(value) \
       default: (struct OtSignConversionUnsupportedType){.err = 1})
 
 /**
@@ -667,7 +676,9 @@ struct OtSignConversionUnsupportedType {
       int16_t: (uint16_t)(value), \
       int32_t: (uint32_t)(value), \
       int64_t: (uint64_t)(value), \
+      _INTPTR_UINPTR_CAST(value) \
       default: (struct OtSignConversionUnsupportedType){.err = 1})
+
 #else  // __cplusplus
 // Templates require "C++" linkage. Even though this block is only reachable
 // when __cplusplus is defined, it's possible that we are in the middle of an
