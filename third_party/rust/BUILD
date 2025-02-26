@@ -25,12 +25,12 @@ string_flag(
 # the bindgen toolchain with the prebuilt binaries.
 cc_import(
     name = "libclang",
-    shared_library = "@llvm_toolchain_llvm//:lib/libclang.so",
+    shared_library = "@llvm_toolchain_llvm//:lib/libclang.dylib",
 )
 
 cc_import(
     name = "libcxx",
-    shared_library = "@llvm_toolchain_llvm//:lib/libc++.so",
+    shared_library = "@llvm_toolchain_llvm//:lib/libc++.dylib",
 )
 
 rust_bindgen_toolchain(
