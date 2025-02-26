@@ -95,16 +95,16 @@ impl OpenOcd {
             .stderr(Stdio::piped());
 
         // SAFETY: prctl is a syscall which is atomic and thus async-signal-safe.
-        unsafe {
-            cmd.pre_exec(|| {
-                // Since we use OpenOCD as a library, make sure it's killed when
-                // the parent process dies. This setting is preserved across execve.
-                rustix::process::set_parent_process_death_signal(Some(
-                    rustix::process::Signal::Hup,
-                ))?;
-                Ok(())
-            });
-        }
+        //    unsafe {
+        //        cmd.pre_exec(|| {
+        //           // Since we use OpenOCD as a library, make sure it's killed when
+        //           // the parent process dies. This setting is preserved across execve.
+        //           rustix::process::set_parent_process_death_signal(Some(
+        //               rustix::process::Signal::Hup,
+        //           ))?;
+        //           Ok(())
+        //       });
+        //   }
 
         let mut child = cmd
             .spawn()
