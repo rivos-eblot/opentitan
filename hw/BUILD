@@ -32,6 +32,7 @@ filegroup(
 string_list_flag(
     name = "verilator_options",
     build_setting_default = [
+        "--no-timing",
         "--threads",
         "4",
     ],
