@@ -52,7 +52,7 @@ impl SerialPortUart {
 
     /// Open a pseudo port (e.g. a verilator pts device).
     pub fn open_pseudo(port_name: &str, baud: u32) -> Result<Self> {
-        let port = TTYPort::open(&serialport::new(port_name, baud).preserve_dtr_on_open())
+        let port = TTYPort::open(&serialport::new(port_name, 0).preserve_dtr_on_open())
             .map_err(|e| UartError::OpenError(e.to_string()))?;
         let _runtime_guard = crate::util::runtime().enter();
         let port = AsyncFd::new(port)?;
