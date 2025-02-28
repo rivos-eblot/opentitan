@@ -17,6 +17,7 @@
 // We create weak symbol aliases for the FIFO write and read functions so the
 // unit tests can provide mocks.  The mocks provide for separate testing of
 // the FIFO functions and the overall transaction management functions.
+#ifndef __APPLE__
 OT_WEAK
 OT_ALIAS("dif_spi_host_fifo_write")
 dif_result_t spi_host_fifo_write_alias(const dif_spi_host_t *spi_host,
@@ -26,6 +27,10 @@ OT_WEAK
 OT_ALIAS("dif_spi_host_fifo_read")
 dif_result_t spi_host_fifo_read_alias(const dif_spi_host_t *spi_host, void *dst,
                                       uint16_t len);
+#else
+#pragma weak spi_host_fifo_write_alias = dif_spi_host_fifo_write
+#pragma weak spi_host_fifo_read_alias = dif_spi_host_fifo_read
+#endif
 
 static void spi_host_reset(const dif_spi_host_t *spi_host) {
   // Set the software reset request bit.
