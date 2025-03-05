@@ -85,6 +85,8 @@ interface sw_test_status_if #(
             `dv_error("==== SW TEST FAILED ====")
           end
         end
+        // flush the output buffers immediately
+        $fflush();
       end
     end
   end
