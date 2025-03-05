@@ -35,6 +35,8 @@ string_list_flag(
         "--no-timing",
         "--threads",
         "5",
+        "--compiler",
+        "clang",
     ],
 )
 
