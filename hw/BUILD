@@ -20,6 +20,8 @@ string_list_flag(
         "--no-timing",
         "--threads",
         "4",
+        "--compiler",
+        "clang",
     ],
 )
 
