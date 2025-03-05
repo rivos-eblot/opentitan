@@ -756,6 +756,7 @@ module ibex_tracer (
         $sformat(file_name, "%s_%h.log", file_name_base, hart_id_i);
 
         $display("%m: Writing execution trace to %s", file_name);
+        $fflush();
         fh = $fopen(file_name, "w");
         file_handle <= fh;
         $fwrite(fh, "Time\tCycle\tPC\tInsn\tDecoded instruction\tRegister and memory contents\n");

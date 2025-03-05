@@ -66,6 +66,8 @@ int main(int argc, char **argv) {
   simctrl.SetInitialResetDelay(20000);
   simctrl.SetResetDuration(10);
 
+  std::setvbuf(stdout, NULL, _IONBF, 0);
+
   std::cout << "Simulation of OpenTitan Earl Grey" << std::endl
             << "=================================" << std::endl
             << std::endl;
