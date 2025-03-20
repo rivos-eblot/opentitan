@@ -60,6 +60,10 @@ int port_open(const char *dev_name, bool write) {
   tty.c_cc[VTIME] = 0;
   tty.c_cc[VMIN] = 0;
 
+  #ifdef __APPLE__
+  #define B4000000 4000000
+  #endif
+
   // Set in/out baud rate to be as high as possible; just in case, but it has
   // no impact upon the measured transfer speed.
   cfsetispeed(&tty, B4000000);
