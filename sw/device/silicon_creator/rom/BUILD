@@ -538,13 +538,14 @@ genrule(
     outs = ["rom_hashes.txt"],
     cmd = """
         echo "SHA256 of rom with real keys" > $@
+    [ $$(uname -s) = "Darwin" ] && gnu="g" || gnu=""
     for f in $(locations :mask_rom_binaries); do
         if [[ "$$f" == *bin ]]; then
             name=$$(basename $$f)
         echo $$f >> $@
-        size=$$(stat -L -c %s $$f)
+        size=$$($${gnu}stat -L -c %s $$f)
         full=$$(sha256sum $$f | cut -f1 -d' ')
-        without_chip_info=$$(head -c -12 $$f | sha256sum | cut -f1 -d' ')
+        without_chip_info=$$($${gnu}head -c -12 $$f | sha256sum | cut -f1 -d' ')
         code=$$(echo $$without_chip_info | sed -E s'/(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})/0x\\8,0x\\7,0x\\6,0x\\5,0x\\4,0x\\3,0x\\2,0x\\1,/g')
 
         echo "              size: $$size" >> $@
