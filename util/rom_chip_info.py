@@ -7,11 +7,13 @@
 import argparse
 import logging as log
 from pathlib import Path
+from typing import Optional
 
 import version_file
 
 
-def generate_chip_info_c_source(scm_revision: int) -> str:
+def generate_chip_info_c_source(scm_revision: int,
+                                 segment: Optional[str] = None) -> str:
     """Return the contents of a C source file that defines `kChipInfo`.
 
     Args:
@@ -22,6 +24,8 @@ def generate_chip_info_c_source(scm_revision: int) -> str:
     scm_rev_byte_be = scm_revision.to_bytes(SHA1_BYTE_CNT, "big")
     scm_revision_high = int.from_bytes(scm_rev_byte_be[0:4], "big")
     scm_revision_low = int.from_bytes(scm_rev_byte_be[4:8], "big")
+
+    segment = '' if not segment else f'{segment},'
 
     return f"""
 // Copyright lowRISC contributors (OpenTitan project).
@@ -35,7 +39,7 @@ def generate_chip_info_c_source(scm_revision: int) -> str:
 #include "sw/device/lib/base/macros.h"
 
 OT_USED
-OT_SECTION(".chip_info")
+OT_SECTION("{segment}.chip_info")
 const chip_info_t kChipInfo = {{
   .scm_revision = (chip_info_scm_revision_t){{
     .scm_revision_low = {scm_revision_low:#010x},
@@ -85,6 +89,9 @@ def main():
     parser.add_argument('--default_version',
                         type=str,
                         help='Version to use if the version file does not indicate a version')
+    parser.add_argument('--mach-o',
+                        action='store_true',
+                        help='Generate for Mach-O targets')
 
     args = parser.parse_args()
 
@@ -92,7 +99,8 @@ def main():
     version = read_version_file(args.ot_version_file, args.default_version)
     log.info("Version: %x" % (version, ))
 
-    generated_source = generate_chip_info_c_source(version)
+    segment = '' if not args.mach_o else '__DATA_CONST'
+    generated_source = generate_chip_info_c_source(version, segment)
     out_path = write_source_file(args.outdir, generated_source)
     log.info("Generated new source file: %s" % (out_path))
 
