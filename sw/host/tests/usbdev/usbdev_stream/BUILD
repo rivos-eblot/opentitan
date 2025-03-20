@@ -26,10 +26,11 @@ cc_library(
     ],
     # Not a local define since targets that depend on this need to use
     # the same configuration.
+    # pkg-config [--cflags|--libs] libusb-1.0
     defines = [
-        "STREAMTEST_LIBUSB=1",
+        "STREAMTEST_LIBUSB=1", "_BAZEL\\ -I/opt/homebrew/opt/libusb/include"
     ],
-    linkopts = ["-lusb-1.0"],
+    linkopts = ["-L/opt/homebrew/opt/libusb/lib", "-lusb-1.0"],
 )
 
 cc_binary(
