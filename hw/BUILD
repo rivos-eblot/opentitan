@@ -34,7 +34,7 @@ string_list_flag(
     build_setting_default = [
         "--no-timing",
         "--threads",
-        "4",
+        "5",
     ],
 )
 
