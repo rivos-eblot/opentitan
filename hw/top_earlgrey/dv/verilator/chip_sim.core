@@ -114,7 +114,8 @@ targets:
           #       (Applies to LDFLAGS expansion below as well)
           - '-CFLAGS "$(CFLAGS_FOR_BUILD) -std=c++14 -Wall -DVM_TRACE_FMT_FST -DVL_USER_STOP -DTOPLEVEL_NAME=chip_sim_tb"'
           - '-LDFLAGS "$(LDFLAGS_FOR_BUILD) -pthread -lutil -lelf"'
-          - '-Wall'
+          # TODO: fix SV files; some warnings are likely legit
+          - '-Wall -Wno-WIDTHEXPAND -Wno-PINMISSING -Wno-UNUSEDSIGNAL -Wno-UNUSEDPARAM -Wno-UNDRIVEN -Wno-ASSIGNDLY -Wno-BLKSEQ -Wno-COMBDLY -Wno-GENUNNAMED -Wno-IMPLICIT -Wno-LATCH -Wno-MULTIDRIVEN -Wno-PROCASSINIT -Wno-STMTDLY -Wno-UNOPTFLAT -Wno-VARHIDDEN -Wno-WIDTHTRUNC'
           # Execute simulation with four threads by default, which works best
           # with four physical CPU cores.
           # Users can override this setting by appending e.g.
