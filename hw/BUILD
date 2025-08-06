@@ -47,7 +47,6 @@ string_list_flag(
     name = "make_options",
     build_setting_default = [
         "-j",
-        "4",
     ],
 )
 
