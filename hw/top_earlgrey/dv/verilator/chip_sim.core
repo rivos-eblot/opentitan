@@ -112,7 +112,7 @@ targets:
           - '--unroll-count 512'
           # TODO: Variable expansion depends on edalize internals. Find better solution.
           #       (Applies to LDFLAGS expansion below as well)
-          - '-CFLAGS "$(CFLAGS_FOR_BUILD) -std=c++17 -Wall -DVM_TRACE_FMT_FST -DVL_USER_STOP -DTOPLEVEL_NAME=chip_sim_tb"'
+          - '-CFLAGS "$(CFLAGS_FOR_BUILD) -std=c++17 -Wall  -Wno-bool-operation -Wno-bitwise-instead-of-logical -Wno-tautological-constant-out-of-range-compare -DVM_TRACE_FMT_FST -DVL_USER_STOP -DTOPLEVEL_NAME=chip_sim_tb"'
           - '-LDFLAGS "$(LDFLAGS_FOR_BUILD) -pthread -lutil -lelf"'
           # TODO: fix SV files; some warnings are likely legit
           - '-Wall -Wno-WIDTHEXPAND -Wno-PINMISSING -Wno-UNUSEDSIGNAL -Wno-UNUSEDPARAM -Wno-UNDRIVEN -Wno-ASSIGNDLY -Wno-BLKSEQ -Wno-COMBDLY -Wno-GENUNNAMED -Wno-IMPLICIT -Wno-LATCH -Wno-MULTIDRIVEN -Wno-PROCASSINIT -Wno-STMTDLY -Wno-UNOPTFLAT -Wno-VARHIDDEN -Wno-WIDTHTRUNC'
