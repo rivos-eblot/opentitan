@@ -89,7 +89,7 @@ targets:
       - PRIM_DEFAULT_IMPL=prim_pkg::ImplGeneric
       - RVFI=true
       - VERILATOR_MEM_BASE=0x10000000
-      - VERILATOR_TEST_STATUS_ADDR=0x211f0080
+      - VERILATOR_TEST_STATUS_ADDR=0x211f0440
       - rom0init
       - rom1init
       - otpinit
